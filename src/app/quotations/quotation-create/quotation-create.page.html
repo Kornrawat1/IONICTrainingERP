@@ -1,0 +1,147 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/app/dashboard"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Create Quotation</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="quotationForm" (ngSubmit)="submit(quotationForm)">
+    <ion-item>
+      <ion-label position="floating" color="primary">Quotation No.</ion-label>
+      <ion-input type="text" formControlName="quotationNo"></ion-input>
+    </ion-item>
+    <div class="validation-errors" *ngIf="(quotationForm.controls['quotationNo'].touched || 
+                                          quotationForm.controls['quotationNo'].dirty) && 
+                                          !quotationForm.controls['quotationNo'].valid">
+      <div class="error-message" *ngIf="quotationForm.controls['quotationNo'].errors?.required">
+        Please enter Quote No.
+      </div>
+    </div>
+    <ion-item>
+      <ion-label position="floating" color="primary">Customer</ion-label>
+      <ion-select formControlName="customer">
+        <ion-select-option value="">Select</ion-select-option>
+        <ion-select-option value="1">Customer-1</ion-select-option>
+        <ion-select-option value="2">Customer-2</ion-select-option>
+        <ion-select-option value="3">Customer-3</ion-select-option>
+        <ion-select-option value="4">Customer-4</ion-select-option>
+        <ion-select-option value="5">Customer-5</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <div class="validation-errors" *ngIf="(quotationForm.controls['customer'].touched || 
+                                          quotationForm.controls['customer'].dirty) && 
+                                          !quotationForm.controls['customer'].valid">
+      <div class="error-message" *ngIf="quotationForm.controls['customer'].errors?.required">
+        Please select Customer.
+      </div>
+    </div>
+    <ion-item>
+      <ion-label position="floating" color="primary">Quotation Date</ion-label>
+      <ion-datetime formControlName="quotationDate" displayFormat="DD/MM/YYYY" min="1994-03-14" max="2012-12-09">
+      </ion-datetime>
+    </ion-item>
+    <div class="validation-errors" *ngIf="(quotationForm.controls['quotationDate'].touched || 
+                                          quotationForm.controls['quotationDate'].dirty) && 
+                                          !quotationForm.controls['quotationDate'].valid">
+      <div class="error-message" *ngIf="quotationForm.controls['quotationDate'].errors?.required">
+        Please select quotationDate.
+      </div>
+    </div>
+    <ion-item>
+      <ion-label position="floating" color="primary">Expire Date</ion-label>
+      <ion-datetime formControlName="expireDate" displayFormat="DD/MM/YYYY"></ion-datetime>
+    </ion-item>
+    <div class="validation-errors" *ngIf="(quotationForm.controls['expireDate'].touched || 
+                                          quotationForm.controls['expireDate'].dirty) && 
+                                          !quotationForm.controls['expireDate'].valid">
+      <div class="error-message" *ngIf="quotationForm.controls['expireDate'].errors?.required">
+        Please select expireDate.
+      </div>
+    </div>
+    <ion-item>
+      <ion-label position="floating" color="primary">Payment Term</ion-label>
+      <ion-select formControlName="paymentTerm">
+        <ion-select-option value="0">Select</ion-select-option>
+        <ion-select-option value="30">Credit 30 days</ion-select-option>
+        <ion-select-option value="60">Credit 60 days</ion-select-option>
+        <ion-select-option value="90">Credit 90 days</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating" color="primary">Reference No.</ion-label>
+      <ion-input type="text" formControlName="referenceNo"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating" color="primary">PIC</ion-label>
+      <ion-select formControlName="pic">
+        <ion-select-option value="0">Select</ion-select-option>
+        <ion-select-option value="biggy">Biggy Nuttapon</ion-select-option>
+        <ion-select-option value="sales">Sales</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <h3 padding>Quotation Line</h3>
+    <div formArrayName="quotationItems" *ngFor="let item of quotationLines.controls; let i=index">
+      <div class="form-group p-b-10" [formGroupName]="i">
+        <ion-item>
+          <ion-label color="primary">Product</ion-label>
+          <ion-select formControlName="productId" class="form-control" placeholder="Select Product" #ps
+            (change)="GetProductInfo(ps, item)">
+            <ion-select-option *ngFor="let prod of products" [value]="prod.productId">{{ prod.productName }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary">Product Name</ion-label>
+          <ion-input type="text" formControlName="productName" class="form-control ion-text-right"
+            (change)="calculateLineTotal(item)"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary">Qty</ion-label>
+          <ion-input type="number" formControlName="qty" class="form-control ion-text-right"
+            (change)="calculateLineTotal(item)"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary">Unit Price</ion-label>
+          <ion-input type="number" formControlName="unitPrice" class="form-control ion-text-right"
+            (change)="calculateLineTotal(item)"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary">Discount</ion-label>
+          <ion-input type="number" formControlName="discount" class="form-control ion-text-right"
+            (change)="calculateLineTotal(item)"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary">Line Total</ion-label>
+          <ion-input type="number" formControlName="lineTotal" class="form-control ion-text-right"></ion-input>
+        </ion-item>
+        <ion-button expand="block" color="danger" (click)="removeItem(i)">
+          <ion-icon name="trash"></ion-icon>
+          Delete</ion-button>
+      </div>
+    </div>
+    <ion-button color="success" type="button" (click)="addItem()">
+      <ion-icon slot="end" name="add-circle"></ion-icon>Add Item
+    </ion-button>
+    <ion-item>
+      <ion-label position="floating" color="primary">Subtotal</ion-label>
+      <ion-input type="number" class="ion-text-right" readonly formControlName="subtotal"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating" color="primary">Other Charges</ion-label>
+      <ion-input type="number" text-right formControlName="otherCharges"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating" color="primary">VAT</ion-label>
+      <ion-input type="number" text-right readonly formControlName="vat"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating" color="primary">Grand Total</ion-label>
+      <ion-input type="number" text-right readonly formControlName="grandTotal"></ion-input>
+    </ion-item>
+    <ion-button type="submit" color="success" expand="full">Save</ion-button>
+
+  </form>
+</ion-content>

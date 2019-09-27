@@ -1,0 +1,29 @@
+<ion-tabs>
+  <ion-tab-bar slot="bottom" routerLink="dashboard">
+    <ion-tab-button tab="dashboard">
+      <ion-icon name="podium"></ion-icon>
+      <ion-label>Dashboard</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="quotations/list" routerLink="quotations">
+      <ion-icon name="document"></ion-icon>
+      <ion-label>Quotations</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="invoices/list" routerLink="invoices">
+      <ion-icon name="book"></ion-icon>
+      <ion-label>Invoices</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="customers">
+      <ion-icon name="contact"></ion-icon>
+      <ion-label>Customers</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button (click)="logout()">
+      <ion-icon name="exit"></ion-icon>
+      <ion-label>Logout</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+
+</ion-tabs>

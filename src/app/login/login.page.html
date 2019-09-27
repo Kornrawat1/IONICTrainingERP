@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="loginForm" (ngSubmit)="login(loginForm)">
+
+    <ion-item>
+      <ion-label position="floating" color="primary">Username</ion-label>
+      <ion-input type="text" formControlName="username"></ion-input>
+    </ion-item>
+    <div class="validation-errors" *ngIf="(loginForm.controls['username'].touched || 
+        loginForm.controls['username'].dirty) && 
+        !loginForm.controls['username'].valid">
+      <div class="error-message" *ngIf="loginForm.controls['username'].errors?.required">
+        Please enter Username
+      </div>
+    </div>
+
+    <ion-item>
+      <ion-label position="floating" color="primary">Password</ion-label>
+      <ion-input type="password" formControlName="password"></ion-input>
+    </ion-item>
+    <div class="validation-errors" *ngIf="(loginForm.controls['password'].touched || 
+      loginForm.controls['password'].dirty)
+      && loginForm.controls['password'].errors">
+      <div class="error-message" *ngIf="loginForm.controls['password'].errors?.required">
+        Please enter Password
+      </div>
+    </div>
+    <div padding>
+      <ion-button type="submit" color="danger" class="submit-btn" expand="full" [disabled]="loginForm.errors">
+        Login
+      </ion-button>
+    </div>
+    <div padding>
+      <ion-button type="button" color="primary" class="submit-btn" 
+        expand="full" [routerLink]="['/register']"
+        routerLinkActive="router-link-active">Create Account</ion-button>
+    </div>
+
+  </form>
+</ion-content>

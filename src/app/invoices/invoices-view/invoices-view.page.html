@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>invoices-view</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+<h4>InvoiceNo : {{ invoiceNo }}</h4>
+<h4>InvoiceDate : {{ invoiceDate }}</h4>
+
+  <ion-list>
+    <ion-item *ngFor="let i of invoiceitems" >
+        <ion-label>{{ i.lineNo }}</ion-label>
+      <ion-label>{{ i.description }}</ion-label>
+      <ion-label>{{ i.qty }}</ion-label>
+      <ion-label>{{ i.uom }}</ion-label>
+      <br>
+      <ion-label class="ion-text-right">{{ i.unitPrice | number }}</ion-label>
+    </ion-item>
+  </ion-list>
+<h4>Subtotal : {{ subTotal }}</h4>
+<h4>Discount : {{ discount }}</h4>
+<h4>vat : {{ vat }}</h4>
+<h4>GrandTotal : {{ grandTotal }}</h4>
+<ion-button type="ion-button" color="success" expand="full" (click)='edit(id)'>edit</ion-button>
+</ion-content>

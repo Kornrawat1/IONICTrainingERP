@@ -1,0 +1,189 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Create Account</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="registerForm" (ngSubmit)="register(registerForm)">
+
+    <!-- Username -->
+    <ion-item>
+      <ion-label position="floating" color="primary">Username</ion-label>
+      <ion-input formControlName="username"></ion-input>
+    </ion-item>
+    <div class="validation-errors" *ngIf="(registerForm.controls['username'].touched || 
+                                          registerForm.controls['username'].dirty) && 
+                                          !registerForm.controls['username'].valid">
+      <div class="error-message" *ngIf="registerForm.controls['username'].errors?.required">
+        Please enter Username
+      </div>
+    </div>
+
+    <!-- Password -->
+    <div formGroupName="passwordGroup">
+      <ion-item>
+        <ion-label position="floating" color="primary">Password</ion-label>
+        <ion-input type="password" formControlName="password"></ion-input>
+      </ion-item>
+      <div class="validation-errors" *ngIf="registerForm.controls['passwordGroup'].errors ||
+                                            ((registerForm.controls['passwordGroup'].controls['password'].touched || 
+                                            registerForm.controls['passwordGroup'].controls['password'].dirty) && 
+                                            registerForm.controls['passwordGroup'].controls['password'].errors)">
+        <div class="error-message" *ngIf="registerForm.controls['passwordGroup'].controls['password'].errors?.required">
+          Please enter Password
+        </div>
+        <div class="error-message" *ngIf="registerForm.controls['passwordGroup'].controls['password'].errors?.minlength && 
+                                          (registerForm.controls['passwordGroup'].controls['password'].touched || 
+                                          registerForm.controls['passwordGroup'].controls['password'].dirty)">
+          Password's length must be at least 8 characters
+        </div>
+        <div class="error-message" *ngIf="registerForm.controls['passwordGroup'].controls['password'].errors?.pattern">
+          Please must consist of lower case, upper case and nuermic characters.
+        </div>
+      </div>
+
+      <!-- Confirm Password -->
+      <ion-item>
+        <ion-label position="floating" color="primary">Confirm Password</ion-label>
+        <ion-input type="password" formControlName="confirmPassword"></ion-input>
+      </ion-item>
+      <div class="validation-errors" *ngIf="registerForm.controls['passwordGroup'].errors ||
+                                            ((registerForm.controls['passwordGroup'].controls['confirmPassword'].touched || 
+                                            registerForm.controls['passwordGroup'].controls['confirmPassword'].dirty) && 
+                                            registerForm.controls['passwordGroup'].controls['confirmPassword'].errors)">
+        <div class="error-message"
+          *ngIf="registerForm.controls['passwordGroup'].controls['confirmPassword'].errors?.required">
+          Please Confirm Password
+        </div>
+        <div class="error-message" *ngIf="registerForm.controls['passwordGroup'].controls['password'].errors?.minlength && 
+                                          (registerForm.controls['passwordGroup'].controls['password'].touched || 
+                                          registerForm.controls['passwordGroup'].controls['password'].dirty)">
+          Password's length must be at least 8 characters
+        </div>
+        <div class="error-message" *ngIf="registerForm.controls['passwordGroup'].controls['password'].errors?.pattern">
+          Please must consist of lower case, upper case and nuermic characters.
+        </div>
+        <div class="error-message" *ngIf="registerForm.controls['passwordGroup'].errors?.match">
+          The password confirmation does not match.
+        </div>
+      </div>
+    </div>
+
+    <!-- First Name -->
+    <ion-item>
+      <ion-label position="floating" color="primary">First Name</ion-label>
+      <ion-input type="text" formControlName="firstName"></ion-input>
+    </ion-item>
+    <div class="validation-errors" *ngIf="(registerForm.controls['firstName'].touched || 
+                                          registerForm.controls['firstName'].dirty) && 
+                                          !registerForm.controls['firstName'].valid">
+      <div class="error-message" *ngIf="registerForm.controls['firstName'].errors?.required">
+        Please enter your first name.
+      </div>
+    </div>
+
+    <!-- Last Name -->
+    <ion-item>
+      <ion-label position="floating" color="primary">Last Name</ion-label>
+      <ion-input matInput type="text" formControlName="lastName"></ion-input>
+    </ion-item>
+    <div class="validation-errors" *ngIf="(registerForm.controls['lastName'].touched || 
+                                          registerForm.controls['lastName'].dirty) && 
+                                          !registerForm.controls['lastName'].valid">
+      <div class="error-message" *ngIf="registerForm.controls['lastName'].errors?.required">
+        Please enter your last name.
+      </div>
+    </div>
+
+    <!-- Email -->
+    <ion-item>
+      <ion-label position="floating" color="primary">Email</ion-label>
+      <ion-input type="text" formControlName="email"></ion-input>
+    </ion-item>
+    <div class="validation-errors" *ngIf="(registerForm.controls['email'].touched || 
+                                          registerForm.controls['email'].dirty) && 
+                                          !registerForm.controls['email'].valid">
+      <div class="error-message" *ngIf="registerForm.controls['email'].errors?.required">
+        Please enter email address.
+      </div>
+      <div class="error-message" *ngIf="registerForm.controls['email'].errors?.pattern">
+        Please enter valid email address.
+      </div>
+    </div>
+
+    <!-- Gender -->
+    <ion-list>
+      <ion-radio-group>
+        <ion-list-header color="primary">Gender</ion-list-header>
+        <ion-item>
+          <ion-label color="warning">Male</ion-label>
+          <ion-radio slot="end" color="success" value="M" formControlName="gender">Male</ion-radio>
+        </ion-item>
+        <ion-item>
+          <ion-label color="warning">Female</ion-label>
+          <ion-radio slot="end" color="success" value="F" formControlName="gender">Female</ion-radio>
+        </ion-item>
+      </ion-radio-group>
+    </ion-list>
+    <div class="validation-errors" *ngIf="(registerForm.controls['gender'].touched || 
+                                          registerForm.controls['gender'].dirty) && 
+                                          !registerForm.controls['gender'].valid">
+      <div class="error-message" *ngIf="registerForm.controls['gender'].errors?.required">
+        Please select your gender.
+      </div>
+    </div>
+
+    <!-- Birth Date -->
+    <ion-item>
+      <ion-label position="floating" color="primary">Birth Date</ion-label>
+      <ion-datetime displayFormat="DD/MM/YYYY" placeholder="Select birth date" formControlName="birthDate">
+      </ion-datetime>
+    </ion-item>
+    <div class="validation-errors" *ngIf="(registerForm.controls['birthDate'].touched || 
+                                          registerForm.controls['birthDate'].dirty) && 
+                                          !registerForm.controls['birthDate'].valid">
+      <div class="error-message" *ngIf="registerForm.controls['birthDate'].errors?.required">
+        Please select your birth date.
+      </div>
+      <div class="error-message" *ngIf="registerForm.controls['birthDate'].errors?.range">
+        Your age must be between 15 - 65 to register.
+      </div>
+    </div>
+    <!-- Country -->
+    <ion-item>
+      <ion-label position="floating" color="primary">Country</ion-label>
+      <ion-select formControlName="country" okText="Select" cancelText="Close">
+        <ion-select-option value="Thailand">Thailand</ion-select-option>
+        <ion-select-option value="USA">USA</ion-select-option>
+        <ion-select-option value="Campodia">Cambodia</ion-select-option>
+        <ion-select-option value="Laos">Laos</ion-select-option>
+        <ion-select-option value="Singapore">Singapore</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <div class="validation-errors" *ngIf="(registerForm.controls['country'].touched || 
+                                          registerForm.controls['country'].dirty) && 
+                                          !registerForm.controls['country'].valid">
+      <div class="error-message" *ngIf="registerForm.controls['country'].errors?.required">
+        Please select your country.
+      </div>
+    </div>
+    <!-- Consent -->
+    <div padding>
+      <ion-checkbox color="secondary" slot="start" formControlName="consent"></ion-checkbox>
+      <ion-label> I accept the terms and conditions.</ion-label>
+    </div>
+    <div class="validation-errors" *ngIf="(registerForm.controls['consent'].touched || 
+        registerForm.controls['consent'].dirty) && 
+        !registerForm.controls['consent'].valid">
+      <div class="error-message" *ngIf="registerForm.controls['consent'].errors?.pattern">
+        Please accept terms and conditions.
+      </div>
+    </div>
+    <div padding>
+      <ion-button type="submit" color="danger" expand="full">Register</ion-button>
+    </div>
+
+  </form>
+
+</ion-content>
